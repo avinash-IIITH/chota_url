@@ -15,10 +15,22 @@ router.get('/dashboard', ensureAuthenticated, function(req, res){
 	//console.log(req.user.username);
 
 	Url.find({username: req.user.username}, function (err, url_list) {
-		console.log(url_list);
-		res.render('index',{
-			url_list: url_list
+		var arr = [];
+
+		url_list.forEach(function(value){
+			var temp = {};
+			temp['_id'] = value._id;
+			temp['long_url'] = value.long_url;
+			temp['counter'] = value.counter;
+			var shortUrl = config.webhost + 'tinyurl/' + base58.encode(value._id);
+			temp['shorturl'] = shortUrl;
+			arr.push(temp);
+			console.log(shortUrl);
 		});
+		res.render('index',{
+			url_list: arr
+		});
+		console.log(arr);
 	})
 	
 });
@@ -86,16 +98,17 @@ router.get('/tinyurl/:encoded_id', function(req, res){
 router.get('/tinyurl/del/:encoded_id', ensureAuthenticated, function(req, res){
   var base58Id = req.params.encoded_id;
   var id = base58.decode(base58Id);
-  console.log('encoded_id ' + base58Id);
-	var query = {_id:id};
+  console.log('encoded_id ' + id);
+	var query = {_id:base58Id};
 
 	Url.findByIdAndRemove(query, function(err, doc){
 	    if (doc) {
 	      // found an entry in the DB, redirect the user to their destination
 	      req.flash('success_msg', 'URL successfully removed');
-	      res.status(200).send({'success_msg': 'URL successfully removed'});
+	      res.redirect('/dashboard');
 	    } else {
 	      // nothing found, redirect to home page
+	      console.log("here");
 	      res.redirect('/error');
 	    }
 	});

@@ -1,2 +1,32 @@
- <h2 class="page-header">Dashboard</h2>
-<p>Welcome to your dashboard</p>  
+{{#if url_list}}
+	<h4> Following are the shortened URLs: </h4> 
+
+	<table class="table table-striped">
+	  <thead>
+	    <tr>	      
+	      <th scope="col">Short URL</th>
+	      <th scope="col">Long URL</th>
+	      <th scope="col">Counter</th>
+	      <th scope="col"></th>
+	    </tr>
+	  </thead>
+	  <tbody>
+		{{#each url_list}}
+			<tr>
+		      <th scope="row">{{this.shorturl}}</th>
+		      <td>{{this.long_url}}</td>
+		      <td>{{this.counter}}</td>
+		      <td><a _id="{{this._id}}" class="btn btn-primary btn-delete-url">Delete</a></td>
+	    	</tr>
+		  
+		{{/each}}
+	  </tbody>
+	</table>
+{{else}}
+	<h4> There are no urls present against this id </h4> 
+
+{{/if}}
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="/js/delete.js"></script>
