@@ -1,21 +1,12 @@
-# Node.js Loginapp
+# Node.js URL Shortening APP
 
-This is a user login and registration app using Node.js, Express, Passport and Mongoose. It is part of the YouTube series [here](https://www.youtube.com/watch?v=Z1ktxiqyiLA)
-
-### Version
-1.1.0
-
-### Usage
-
+This is a url shortening app using Node.js, Express, Passport and Mongoose.
 
 ### Installation
 
-Loginapp requires [Node.js](https://nodejs.org/) v4+ to run.
+1. $ npm install
 
-```sh
-$ npm install
-```
+2. Change DB URL in config.js
 
-```sh
-$ npm start
-```
+3. node app.js
+
