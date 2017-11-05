@@ -107,8 +107,7 @@ router.get('/tinyurl/del/:encoded_id', ensureAuthenticated, function(req, res){
 	      req.flash('success_msg', 'URL successfully removed');
 	      res.redirect('/dashboard');
 	    } else {
-	      // nothing found, redirect to home page
-	      console.log("here");
+	      // nothing found, redirect to home page	      
 	      res.redirect('/error');
 	    }
 	});
