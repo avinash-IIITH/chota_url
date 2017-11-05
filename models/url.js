@@ -15,7 +15,8 @@ var urlSchema = new Schema({
   _id: {type: Number, index: true},
   long_url: String,
   created_at: Date,
-  counter: Number
+  counter: Number,
+  username: String
 });
 
 // The pre('save', callback) middleware executes the callback function

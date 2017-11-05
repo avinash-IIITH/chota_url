@@ -13,7 +13,14 @@ router.get('/', ensureAuthenticated, function(req, res){
 
 router.get('/dashboard', ensureAuthenticated, function(req, res){
 	//console.log(req.user.username);
-	res.render('index');
+
+	Url.find({username: req.user.username}, function (err, url_list) {
+		console.log(url_list);
+		res.render('index',{
+			url_list: url_list
+		});
+	})
+	
 });
 
 router.get('/tinyurl',  ensureAuthenticated, function(req, res){
@@ -36,6 +43,7 @@ router.post('/shorten',  ensureAuthenticated, function(req, res){
 		 
 		  var newUrl = Url({
 		    long_url: longUrl,
+		    username: req.user.username,
 		    counter: 0
 		  });
 

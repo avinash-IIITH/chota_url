@@ -10,6 +10,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+const fs = require('fs');
 
 var config = require('./config');
 mongoose.connect('mongodb://' + config.db.host + '/' + config.db.name, {
@@ -47,6 +48,15 @@ app.use(session({
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+  var now = new Date().toString();
+  var log = `${now}: ${req.method} ${req.url}`;
+
+  console.log(log);
+  fs.appendFile('server.log', log + '\n');
+  next();
+});
 
 // Express Validator
 app.use(expressValidator({
