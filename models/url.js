@@ -14,7 +14,8 @@ var counter = mongoose.model('counter', CounterSchema);
 var urlSchema = new Schema({
   _id: {type: Number, index: true},
   long_url: String,
-  created_at: Date
+  created_at: Date,
+  counter: Number
 });
 
 // The pre('save', callback) middleware executes the callback function
