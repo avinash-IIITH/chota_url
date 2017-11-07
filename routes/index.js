@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+let date = require('date-and-time');
+var dateFormat = require('dateformat');
 
 var base58 = require('../base58.js');
 var Url = require('../models/url');
+var urlDetails = require('../models/urldetails');
 var config = require('../config');
 
 // Get Homepage
@@ -78,7 +81,41 @@ router.post('/shorten',  ensureAuthenticated, function(req, res){
 router.get('/tinyurl/:encoded_id', function(req, res){
   var base58Id = req.params.encoded_id;
   var id = base58.decode(base58Id);
+  var longurl="";
   console.log('encoded_id ' + base58Id);
+
+  	var day = new Date();
+	//date.format(d, 'MMM DD YYYY');
+	var d=dateFormat(day, "yyyy-mm-dd"); 
+	console.log(d);
+
+	var query1 = {_id:id, created_at:d}
+		, update1 = { $inc: { counter: 1 }}
+		, options1 = { multi: false };
+
+	urlDetails.findOneAndUpdate(query1, update1, options1, function(err, doc){
+	    if (doc) {
+	      // found an entry in the DB, redirect the user to their destination
+	      //res.redirect(doc.long_url);
+	    } else {
+	      var urlDetail = urlDetails({
+	      	_id:id,
+		    created_at:d,
+		    counter: 1
+		  });
+
+		  
+		  urlDetail.save(function(err) {
+			    if (err){
+			      console.log(err);
+			    }
+	    	});
+	    	//res.redirect(longurl);
+		}
+
+	});
+
+
 	var query = {_id:id}
 		, update = { $inc: { counter: 1 }}
 		, options = { multi: false };
@@ -87,13 +124,16 @@ router.get('/tinyurl/:encoded_id', function(req, res){
 	    if (doc) {
 	      // found an entry in the DB, redirect the user to their destination
 	      res.redirect(doc.long_url);
+	      //longurl = doc.long_url;
 	    } else {
 	      // nothing found, redirect to home page
 	      res.redirect('/error');
 	    }
 	});
 
+
 });
+
 
 router.get('/tinyurl/del/:encoded_id', ensureAuthenticated, function(req, res){
   var base58Id = req.params.encoded_id;
