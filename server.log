@@ -579,3 +579,9 @@ Tue Nov 07 2017 18:22:05 GMT+0530 (IST): GET /tinyurl/z
 Tue Nov 07 2017 18:22:31 GMT+0530 (IST): GET /
 Tue Nov 07 2017 18:22:35 GMT+0530 (IST): GET /dashboard
 Tue Nov 07 2017 18:22:39 GMT+0530 (IST): GET /tinyurl/z
+Wed Nov 08 2017 17:12:50 GMT+0530 (IST): GET /
+Wed Nov 08 2017 17:13:36 GMT+0530 (IST): GET /
+Wed Nov 08 2017 17:13:36 GMT+0530 (IST): GET /users/login
+Wed Nov 08 2017 17:13:37 GMT+0530 (IST): GET /favicon.ico
+Wed Nov 08 2017 17:13:39 GMT+0530 (IST): GET /users/login
+Wed Nov 08 2017 17:13:41 GMT+0530 (IST): GET /users/register
