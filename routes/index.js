@@ -44,15 +44,16 @@ router.get('/tinyurl/graph/:encoded_id', ensureAuthenticated, function(req, res)
 
 	var base58Id = req.params.encoded_id;
 	var query = {id:base58Id};
-
-	Url.find(query, function (err, url_list) {				//TODO : use UrlCounters once corrected
+console.log(query);
+console.log(base58Id);
+	urlDetails.find(query, function (err, url_list) {				//TODO : use UrlCounters once corrected
 		var arr = [];
 
 		url_list.forEach(function(value){
 			var temp = {};
 			
-			temp['_id'] = value._id;
-			temp['long_url'] = value.long_url;
+			temp['counter'] = value.counter;
+			temp['created_at'] = value.created_at;
 			
 			arr.push(temp);
 			console.log(arr);
