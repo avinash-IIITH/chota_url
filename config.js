@@ -6,7 +6,7 @@ config.db = {};
 config.webhost = 'https://dry-dusk-18938.herokuapp.com/';
 
 // your MongoDB host and database name
-config.db.host = 'guest:guest@ds255265.mlab.com:55265/';
+config.db.host = 'guest:guest@ds255265.mlab.com:55265/tiny_url';
 config.db.name = 'tiny_url';
 
 module.exports = config;
