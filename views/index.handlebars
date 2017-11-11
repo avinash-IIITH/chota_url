@@ -1,22 +1,23 @@
 {{#if url_list}}
-	<h4> Following are the shortened URLs: </h4> 
-
+	<h3><B><U>Following are the shortened URLs : </U></B></h3>
 	<table class="table table-striped">
 	  <thead>
 	    <tr>	      
-	      <th scope="col">Short URL</th>
-	      <th scope="col">Long URL</th>
-	      <th scope="col">Counter</th>
-	      <th scope="col"></th>
+	      <th class="table_head" scope="col">Short URL</th>
+	      <th class="table_head" scope="col">Long URL</th>
+	      <th class="table_head" scope="col">Counter</th>
+	      <th class="table_head" scope="col"></th>
+	      <th class="table_head" scope="col"></th>
 	    </tr>
 	  </thead>
-	  <tbody>
+	  <tbody class="table_body">
 		{{#each url_list}}
-			<tr>
-		      <th scope="row">{{this.shorturl}}</th>
-		      <td>{{this.long_url}}</td>
-		      <td>{{this.counter}}</td>
-		      <td><a _id="{{this._id}}" class="btn btn-primary btn-delete-url">Delete</a></td>
+			<tr class="table_body">
+		      <th class="table_body" scope="row">{{this.shorturl}}</th>
+		      <td class="table_body">{{this.long_url}}</td>
+		      <td class="table_body">{{this.counter}}</td>
+		      <td class="table_body"><a _id="{{this._id}}" class="btn btn-primary btn-delete-url">Delete</a></td>
+		      <td class="table_body"><a class="btn btn-primary" onclick = "graph_function()" >Graph</a></td>
 	    	</tr>
 		  
 		{{/each}}
@@ -30,3 +31,12 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="/js/delete.js"></script>
+
+
+
+
+<script>
+function graph_function() {
+    window.open("/graph");
+}
+</script>

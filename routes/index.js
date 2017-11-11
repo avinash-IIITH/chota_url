@@ -7,6 +7,7 @@ var dateFormat = require('dateformat');
 var base58 = require('../base58.js');
 var Url = require('../models/url');
 var urlDetails = require('../models/urldetails');
+//var UrlCounters = require('../models/');		//TODO : write database name and correct the database
 var config = require('../config');
 
 // Get Homepage
@@ -36,6 +37,30 @@ router.get('/dashboard', ensureAuthenticated, function(req, res){
 		console.log(arr);
 	})
 	
+});
+
+router.get('/graph', function(req, res){
+//console.log("Present");
+//res.send("hi");
+Url.find({username: req.user.username}, function (err, url_list) {				//TODO : use UrlCounters once corrected
+	var arr = [];
+
+	url_list.forEach(function(value){
+		var temp = {};
+		
+		temp['_id'] = value._id;
+		temp['long_url'] = value.long_url;
+		
+		arr.push(temp);
+		console.log(arr);
+	});
+
+res.render('graph',{
+	url_list : arr
+});
+console.log(arr);
+});
+
 });
 
 router.get('/tinyurl',  ensureAuthenticated, function(req, res){

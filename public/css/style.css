@@ -2,6 +2,9 @@
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+  background-color: #101010;
+  background-image: url("/img/bg2.jpg");
+  height: 100%;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -16,12 +19,24 @@ body {
 .header {
   padding-bottom: 20px;
   border-bottom: 1px solid #e5e5e5;
+
+  
+}
+.tiny {
+  color: white;
 }
 /* Make the masthead heading the same height as the navigation */
-.header h3 {
+.header ,h3, h1 {
   margin-top: 0;
   margin-bottom: 0;
   line-height: 40px;
+}
+
+.text-muted {
+ padding-top : 20px;
+}
+.shortcut {
+  font-size: 2em;
 }
 
 /* Custom page footer */
@@ -29,12 +44,19 @@ body {
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+position: absolute;
+bottom: 0;
+width: inherit;
+padding-bottom: 20px;
+
 }
 
 /* Customize container */
-@media (min-width: 768px) {
+@media (min-width: 75%) {
   .container {
-    max-width: 730px;
+    max-width: 85%;
+min-height: 100%;
+
   }
 }
 .container-narrow > hr {
@@ -84,4 +106,21 @@ body {
 
 footer{
   margin-top:40px;
+}
+
+.acc-login{
+  background-color: #333;
+  padding: 15px;
+  border-style: double;
+  border-radius: 10px;
+  border-color: #222;
+}
+
+.table_head {
+  font-size: 16pt;
+}
+.table_body {
+  background-color: #292929;
+  color: lawngreen;
+  font-size: 14pt;
 }

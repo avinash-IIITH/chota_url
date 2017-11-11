@@ -15,6 +15,7 @@
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
     "date-and-time": "^0.5.0",
+    "dateformat": "^3.0.2",
     "express": "*",
     "express-handlebars": "*",
     "express-messages": "*",
