@@ -40,28 +40,30 @@ router.get('/dashboard', ensureAuthenticated, function(req, res){
 	
 });
 
-router.get('/graph', ensureAuthenticated, function(req, res){
-//console.log("Present");
-//res.send("hi");
-Url.find({username: req.user.username}, function (err, url_list) {				//TODO : use UrlCounters once corrected
-	var arr = [];
+router.get('/tinyurl/graph/:encoded_id', ensureAuthenticated, function(req, res){
 
-	url_list.forEach(function(value){
-		var temp = {};
-		
-		temp['_id'] = value._id;
-		temp['long_url'] = value.long_url;
-		
-		arr.push(temp);
-		console.log(arr);
+	var base58Id = req.params.encoded_id;
+	var query = {id:base58Id};
+
+	Url.find(query, function (err, url_list) {				//TODO : use UrlCounters once corrected
+		var arr = [];
+
+		url_list.forEach(function(value){
+			var temp = {};
+			
+			temp['_id'] = value._id;
+			temp['long_url'] = value.long_url;
+			
+			arr.push(temp);
+			console.log(arr);
+		});
+
+	res.render('graph',{
+		url_list : arr
 	});
-
-res.render('graph',{
-	url_list : arr
-});
-console.log(arr);
-});
-
+	console.log(arr);
+	});
+	
 });
 
 router.get('/tinyurl',  ensureAuthenticated, function(req, res){
