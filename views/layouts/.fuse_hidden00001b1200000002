@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tiny</title>
+	<link rel="stylesheet" href="/css/bootstrap.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+	<div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            {{#if user}}
+              <li class="shortcut" role="presentation"><a href="/dashboard">Dashboard</a></li>
+              <li class="shortcut" role="presentation"><a href="/tinyurl">Shorten URL</a></li>
+              <li class="shortcut" role="presentation"><a href="/users/logout">Logout</a></li>
+            {{else}}
+              <li class="shortcut" role="presentation"><a href="/users/login">Login</a></li>
+              <li class="shortcut" role="presentation"><a href="/users/register">Register</a></li>
+            {{/if}}
+          </ul>
+        </nav>
+        <h1 class="text-muted, tiny">&copyTiny</h1>
+      </div>
+
+
+      <div class="row middlepg">
+      	<div class="col-lg-3">
+      	</div>
+        <div class="col-lg-6">
+          {{#if success_msg}}
+            <div class="alert alert-success">{{success_msg}}</div>
+          {{/if}}
+
+          {{#if error_msg}}
+            <div class="alert alert-danger">{{error_msg}}</div>
+          {{/if}}
+
+          {{#if error}}
+            <div class="alert alert-danger">{{error}}</div>
+          {{/if}}
+        
+        </div>
+		<div class="col-lg-3">
+      	</div>
+        
+      </div>
+      <div class="row">
+      	<div class="col-lg-12">
+      		{{{body}}}
+      	</div>
+      </div>
+      	<footer class="footer">
+        	<p>&copy; 2017, IIITH.</p>
+      	</footer>
+
+    </div> <!-- /container -->
+</body>
+</html>

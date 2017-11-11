@@ -14,5 +14,5 @@ $('.btn-graph-url').on('click', function(event){
 	var url_graph = '/tinyurl/graph/'+temp;
 
 	event.preventDefault(); 
-	window.open(url_graph);
+	window.open(url_graph, "Graph", "height=800,width=800");
 });
