@@ -3,6 +3,7 @@ var router = express.Router();
 var path = require('path');
 let date = require('date-and-time');
 var dateFormat = require('dateformat');
+var validUrl = require('valid-url');
 
 var base58 = require('../base58.js');
 var Url = require('../models/url');
@@ -71,36 +72,41 @@ router.post('/shorten',  ensureAuthenticated, function(req, res){
 	var longUrl = req.body.url;
 	var shortUrl = '';
 
+	if (validUrl.isUri(longUrl)){
+        console.log('Looks like an URI');
+        Url.findOne({long_url: longUrl}, function (err, doc){
+			if (doc){
+			  
+			  shortUrl = config.webhost + 'tinyurl/' + base58.encode(doc._id);
 
-	Url.findOne({long_url: longUrl}, function (err, doc){
-		if (doc){
-		  
-		  shortUrl = config.webhost + 'tinyurl/' + base58.encode(doc._id);
+			  
+			  res.send({'shortUrl': shortUrl});
+			} else {
+			 
+			  var newUrl = Url({
+			    long_url: longUrl,
+			    username: req.user.username,
+			    counter: 0
+			  });
 
-		  
-		  res.send({'shortUrl': shortUrl});
-		} else {
-		 
-		  var newUrl = Url({
-		    long_url: longUrl,
-		    username: req.user.username,
-		    counter: 0
-		  });
+			  
+			  newUrl.save(function(err) {
+			    if (err){
+			      console.log(err);
+			    }
 
-		  
-		  newUrl.save(function(err) {
-		    if (err){
-		      console.log(err);
-		    }
+			    // construct the short URL
+			    shortUrl = config.webhost + 'tinyurl/' +base58.encode(newUrl._id);
 
-		    // construct the short URL
-		    shortUrl = config.webhost + 'tinyurl/' +base58.encode(newUrl._id);
+			    res.send({'shortUrl': shortUrl});
+			  });
+			}
 
-		    res.send({'shortUrl': shortUrl});
-		  });
-		}
-
-	});
+		});
+    } else {
+        console.log('Not a URI');
+        res.send({'errorMsg': "Not a URI"});
+    }	
 });
 
 router.get('/tinyurl/:encoded_id', function(req, res){

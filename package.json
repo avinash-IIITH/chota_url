@@ -25,6 +25,7 @@
     "mongoose": "*",
     "passport": "*",
     "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "valid-url": "^1.0.9"
   }
 }
