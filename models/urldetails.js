@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 // create a schema for our links
 var urlDetailsSchema = new Schema({
-  _id: Number,
+  id: Number,
   created_at: Date,
   counter: Number,
 });

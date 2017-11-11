@@ -39,7 +39,7 @@ router.get('/dashboard', ensureAuthenticated, function(req, res){
 	
 });
 
-router.get('/graph', function(req, res){
+router.get('/graph', ensureAuthenticated, function(req, res){
 //console.log("Present");
 //res.send("hi");
 Url.find({username: req.user.username}, function (err, url_list) {				//TODO : use UrlCounters once corrected
@@ -114,17 +114,17 @@ router.get('/tinyurl/:encoded_id', function(req, res){
 	var d=dateFormat(day, "yyyy-mm-dd"); 
 	console.log(d);
 
-	var query1 = {_id:id, created_at:d}
+	var query1 = {id:id, created_at:d}
 		, update1 = { $inc: { counter: 1 }}
 		, options1 = { multi: false };
 
 	urlDetails.findOneAndUpdate(query1, update1, options1, function(err, doc){
 	    if (doc) {
-	      // found an entry in the DB, redirect the user to their destination
-	      //res.redirect(doc.long_url);
+	      console.log("Got the document");
 	    } else {
+	    	console.log("Didnt Get the document");
 	      var urlDetail = urlDetails({
-	      	_id:id,
+	      	id:id,
 		    created_at:d,
 		    counter: 1
 		  });
