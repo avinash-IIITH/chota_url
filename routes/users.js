@@ -5,6 +5,8 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+
+
 // Register
 router.get('/register', function(req, res){
 	res.render('register');
@@ -82,6 +84,7 @@ passport.use(new LocalStrategy(
    	});
    });
   }));
+
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
