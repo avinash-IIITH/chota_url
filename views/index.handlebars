@@ -1,5 +1,6 @@
 {{#if url_list}}
-	<h3><B><U>Following are the shortened URLs : </U></B></h3>
+	<h3 class="black-header"><B><U>Following are the shortened URLs: </U></B></h3>
+	</br>
 	<table class="table table-striped">
 	  <thead>
 	    <tr>	      
@@ -17,7 +18,7 @@
 		      <td class="table_body">{{this.long_url}}</td>
 		      <td class="table_body">{{this.counter}}</td>
 		      <td class="table_body"><a _id="{{this._id}}" class="btn btn-primary btn-delete-url">Delete</a></td>
-		      <td class="table_body"><a class="btn btn-primary" onclick = "graph_function()" >Graph</a></td>
+		      <td class="table_body"><a _id="{{this._id}}" class="btn btn-primary btn-graph-url">Graph</a></td>
 	    	</tr>
 		  
 		{{/each}}
@@ -31,12 +32,3 @@
 <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="/js/delete.js"></script>
-
-
-
-
-<script>
-function graph_function() {
-    window.open("/graph");
-}
-</script>

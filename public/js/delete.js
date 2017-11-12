@@ -7,3 +7,12 @@ $('.btn-delete-url').on('click', function(event){
 	location.replace(url_del);
 
 });
+
+	
+$('.btn-graph-url').on('click', function(event){
+	var temp = $(this).attr('_id');
+	var url_graph = '/tinyurl/graph/'+temp;
+
+	event.preventDefault(); 
+	window.open(url_graph, "Graph", "height=800,width=800");
+});

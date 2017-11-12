@@ -5,11 +5,21 @@ $('.btn-shorten').on('click', function(){
 		dataType: 'JSON',
 		data: {url: $('#url-field').val()},
 		success: function(data){
-			var resultHTML = '<a class="result" href="' + data.shortUrl + '">'
+
+			if(data.errorMsg){
+				
+				var resultHTML = 'The entered text is not a valid url.';
+
+				$('#link').html(resultHTML);
+				$('#link').hide().fadeIn('slow');
+			}else{
+				
+				var resultHTML = '<a class="result" href="' + data.shortUrl + '">'
 				+ data.shortUrl + '</a>';
 
-			$('#link').html(resultHTML);
-			$('#link').hide().fadeIn('slow');
+				$('#link').html(resultHTML);
+				$('#link').hide().fadeIn('slow');
+			}		
 
 		}
 	});

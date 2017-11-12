@@ -24,7 +24,7 @@
       </div>
 
 
-      <div class="row">
+      <div class="row middlepg">
       	<div class="col-lg-3">
       	</div>
         <div class="col-lg-6">
@@ -50,7 +50,10 @@
       		{{{body}}}
       	</div>
       </div>
-      	
+      	<footer class="footer">
+        	<p>&copy; 2017, IIITH.</p>
+      	</footer>
+
     </div> <!-- /container -->
 </body>
 </html>

@@ -3,6 +3,7 @@ var router = express.Router();
 var path = require('path');
 let date = require('date-and-time');
 var dateFormat = require('dateformat');
+var validUrl = require('valid-url');
 
 var base58 = require('../base58.js');
 var Url = require('../models/url');
@@ -39,28 +40,31 @@ router.get('/dashboard', ensureAuthenticated, function(req, res){
 	
 });
 
-router.get('/graph', function(req, res){
-//console.log("Present");
-//res.send("hi");
-Url.find({username: req.user.username}, function (err, url_list) {				//TODO : use UrlCounters once corrected
-	var arr = [];
+router.get('/tinyurl/graph/:encoded_id', ensureAuthenticated, function(req, res){
 
-	url_list.forEach(function(value){
-		var temp = {};
-		
-		temp['_id'] = value._id;
-		temp['long_url'] = value.long_url;
-		
-		arr.push(temp);
-		console.log(arr);
+	var base58Id = req.params.encoded_id;
+	var query = {id:base58Id};
+console.log(query);
+console.log(base58Id);
+	urlDetails.find(query, function (err, url_list) {				//TODO : use UrlCounters once corrected
+		var arr = [];
+
+		url_list.forEach(function(value){
+			var temp = {};
+			
+			temp['counter'] = value.counter;
+			temp['created_at'] = value.created_at;
+			
+			arr.push(temp);
+			console.log(arr);
+		});
+
+	res.render('graph',{
+		url_list : arr
 	});
-
-res.render('graph',{
-	url_list : arr
-});
-console.log(arr);
-});
-
+	console.log(arr);
+	});
+	
 });
 
 router.get('/tinyurl',  ensureAuthenticated, function(req, res){
@@ -71,36 +75,41 @@ router.post('/shorten',  ensureAuthenticated, function(req, res){
 	var longUrl = req.body.url;
 	var shortUrl = '';
 
+	if (validUrl.isUri(longUrl)){
+        console.log('Looks like an URI');
+        Url.findOne({long_url: longUrl}, function (err, doc){
+			if (doc){
+			  
+			  shortUrl = config.webhost + 'tinyurl/' + base58.encode(doc._id);
 
-	Url.findOne({long_url: longUrl}, function (err, doc){
-		if (doc){
-		  
-		  shortUrl = config.webhost + 'tinyurl/' + base58.encode(doc._id);
+			  
+			  res.send({'shortUrl': shortUrl});
+			} else {
+			 
+			  var newUrl = Url({
+			    long_url: longUrl,
+			    username: req.user.username,
+			    counter: 0
+			  });
 
-		  
-		  res.send({'shortUrl': shortUrl});
-		} else {
-		 
-		  var newUrl = Url({
-		    long_url: longUrl,
-		    username: req.user.username,
-		    counter: 0
-		  });
+			  
+			  newUrl.save(function(err) {
+			    if (err){
+			      console.log(err);
+			    }
 
-		  
-		  newUrl.save(function(err) {
-		    if (err){
-		      console.log(err);
-		    }
+			    // construct the short URL
+			    shortUrl = config.webhost + 'tinyurl/' +base58.encode(newUrl._id);
 
-		    // construct the short URL
-		    shortUrl = config.webhost + 'tinyurl/' +base58.encode(newUrl._id);
+			    res.send({'shortUrl': shortUrl});
+			  });
+			}
 
-		    res.send({'shortUrl': shortUrl});
-		  });
-		}
-
-	});
+		});
+    } else {
+        console.log('Not a URI');
+        res.send({'errorMsg': "Not a URI"});
+    }	
 });
 
 router.get('/tinyurl/:encoded_id', function(req, res){
@@ -114,17 +123,17 @@ router.get('/tinyurl/:encoded_id', function(req, res){
 	var d=dateFormat(day, "yyyy-mm-dd"); 
 	console.log(d);
 
-	var query1 = {_id:id, created_at:d}
+	var query1 = {id:id, created_at:d}
 		, update1 = { $inc: { counter: 1 }}
 		, options1 = { multi: false };
 
 	urlDetails.findOneAndUpdate(query1, update1, options1, function(err, doc){
 	    if (doc) {
-	      // found an entry in the DB, redirect the user to their destination
-	      //res.redirect(doc.long_url);
+	      console.log("Got the document");
 	    } else {
+	    	console.log("Didnt Get the document");
 	      var urlDetail = urlDetails({
-	      	_id:id,
+	      	id:id,
 		    created_at:d,
 		    counter: 1
 		  });

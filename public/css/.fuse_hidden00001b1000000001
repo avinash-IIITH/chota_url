@@ -22,6 +22,7 @@ body {
 
   
 }
+
 .tiny {
   color: white;
 }
@@ -39,6 +40,12 @@ body {
   font-size: 2em;
 }
 
+.middlepg {
+  overflow: auto;
+    position: absolute;
+    top: 25px;
+    bottom: 40px;
+}
 /* Custom page footer */
 .footer {
   padding-top: 19px;
@@ -123,12 +130,4 @@ footer{
   background-color: #292929;
   color: lawngreen;
   font-size: 14pt;
-}
-
-.graph{
-  margin-top: 10%;
-}
-
-.black-header{
-  color:deepskyblue;
 }
